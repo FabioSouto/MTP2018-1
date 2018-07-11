@@ -2,12 +2,11 @@
 // 11621EAU019
 // PROGRAMA 9
 
-
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-struct dimensoes
+struct dimensao
 {
 	float largura;
 	float profundidade;
@@ -16,86 +15,87 @@ struct dimensoes
 
 struct produto
 {
-	char numero[101];
 	char nome[64];
 	float preco;
-	float dimensoes;
-	struct dimensoes end;
+	struct dimensao end;
 };
 
-struct produto produtos[100];
-
-void cadastrar()
+void cadastro(struct produto vet_produto[], int i)
 {
-	struct produto;
-	int i = 0;
-	printf("\n\nNumero do produto a ser cadastrado: ");
-	scanf("%s", &produtos[i].numero);
-	printf("\nNome: ");
-	scanf("%s", &produtos[i].nome);
-	getchar();
-	printf("\nDigite o preco: ");
-	scanf("%f", &produtos[i].preco);
-	getchar();
-	printf("\nDigite a largura: ");
-	scanf("%f", &produtos[i].end.largura);
-	getchar();
-	printf("\nDigite a produndidade: ");
-	scanf("%f", &produtos[i].end.profundidade);
-	getchar();
-	printf("\nDigite a altura: ");
-	scanf("%f", &produtos[i].end.altura);
-	printf("\n\nProduto %s cadastrado com sucesso!\n\n", produtos[i].numero);
+	printf("\nNome:");
+	fgets(vet_produto[i].nome, 64, stdin);
+	printf("\nPreco:");
+	scanf("%f", &vet_produto[i].preco); getchar();
+	printf("\nLargura:");
+	scanf("%f", &vet_produto[i].end.largura); getchar();
+	printf("\nProfundidade:");
+	scanf("%f", &vet_produto[i].end.profundidade); getchar();
+	printf("\nAltura:");
+	scanf("%f", &vet_produto[i].end.altura); getchar();
 }
 
-void consultar()
+void pesquisa(struct produto vet_produto[], int i)
 {
-	char numero_consulta[101];
-	int i = 0, flag = 0;
-	printf("\n\nDigite o numero do produto: ");
-	fflush(stdin);
-	gets(numero_consulta);
-	
-	for(i = 0 ; i < 101; i++)
-	{
-		if(strcmp(numero_consulta, produtos[i].numero) == 0)
-		{
-			flag = 1;
-			printf("\n\n%s, R$ %.2f, ",produtos[i].nome, produtos[i].preco);
-			printf("L: %.2fm x P: %.2fm x A: %.2fm\n\n", produtos[i].end.largura, produtos[i].end.profundidade, produtos[i].end.altura);
-			break;
-		}
-	}
-	if(flag == 0)
-	{
-		printf("\n\nProduto nao cadastrado.\n\n");
-		return;
-	}
+	char condicional[64];
+	strcpy(condicional, " ");
+	if(strcmp(condicional, vet_produto[i].nome) == 0) printf("\nProduto nao cadastrado!");
+	else printf("%s R$ %.2f L: %gm x P: %.2fm x A: %.2fm", vet_produto[i].nome, vet_produto[i].preco, vet_produto[i].end.largura, vet_produto[i].end.profundidade, vet_produto[i].end.altura);
 }
 
-int main ()
+int main()
+
 {
-	int opc;
-	int i = 0;
-	struct produto produtos;
-	
-	do
-	{
-	printf("Menu:\n\n 1 - Cadastrar produto.\n 2 - Consultar produto.\n 3 - Sair");
-	printf("\n\nDigite a opcao desejada: ");
-	scanf("%d", &opc);
-	getchar();
-		switch(opc)
+	struct produto vet_produto[2];
+	int opcao, produto, num_produto = 0;
+	strcpy(vet_produto[0].nome, " ");
+	strcpy(vet_produto[1].nome, " ");
+	do{
+		printf("1 - Cadastro\n2 - Consulta\n3 - Sair\n\nDigite uma opcao: ");
+		scanf("%d", &opcao); getchar();  
+		switch(opcao)
 		{
-			case 1:
-				cadastrar();
+			case 1: 
+				printf("\nEscolha o produto numero do produto:");
+				scanf("%d", &produto); getchar();
+				switch(produto)
+				{
+					case 1:
+						num_produto = produto -1;
+						cadastro(vet_produto, num_produto);
+						printf("\nProduto 1 cadastrado com sucesso");
+						num_produto = 0;
+						break;
+					case 2:
+						num_produto = produto -1;
+						cadastro(vet_produto, num_produto);
+						printf("\nProduto 2 cadastrado com sucesso");
+						num_produto = 0;
+						break;
+					default: break;
+				}
 				break;
-			case 2:
-				consultar();
+			case 2:	
+				printf("\nEscolha o produto 1 ou 2:");
+					scanf("%d", &produto); getchar();
+				switch(produto)
+				{
+					case 1:
+						num_produto = produto -1;
+						pesquisa(vet_produto, num_produto);
+						num_produto = 0;
+						break;
+					case 2:
+						num_produto = produto -1;
+						pesquisa(vet_produto, num_produto);
+						num_produto = 0;
+						break;
+					default: break;
+				}
 				break;
-			case 3:
-				return 0;
-		}
-	}while (opc != 4);
-	return 0;	
+			case 3: return 0;
+			default: break;
+	}	
+		printf("\n\n");
+	}while(opcao != 4);
+	return 0;
 }
