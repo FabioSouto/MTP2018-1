@@ -1,28 +1,31 @@
+// Fï¿½bio Souto Santos
+// 11621EAU019
+// PROGRAMA 4
 
-// Fábio Souto 
-// MATRÍCULA: 11621EAU019
 
 
 #include <stdio.h>
 
-int main() 
-{
-	int cres = 0, i;
-	char n[256];
-
-	printf ("Digite um numero: ");
-	scanf ("%s", &n);
-	getchar ();
+int main ()
+   {	
+	int i=0, x=0;
+	char num[300];
 	
-	for (i=0; n[i] != '\0'; i++)
-	{
-		if (n[i] >=48 && n[i] <= 57)
-		{
-			n[i] = n[i] - '0';
-			cres = cres*10 + n[i];
+	printf("Insira uma string qualquer: \n");
+	fgets(num,300,stdin);
+	
+	while(num[i]){
+		
+		if(num[i]>=48 && num[i]<=57){
+			
+			num[i]=num[i]-'0';
+			x = x*10+num[i];
 		}
+		
+		i++;
 	}
 	
-	printf ("\nO numero digitado: %d", cres);
+	printf("String formatada: %d",x);
+	
 	return 0;
 }
